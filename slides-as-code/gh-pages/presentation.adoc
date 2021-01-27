@@ -36,7 +36,6 @@ image::Types.jpg[background,size=cover]
 === What is the Life Cycle of services?
 
 --
-* Callback-Methoden
 * Bound Service
 * Unbound Service
 
@@ -47,18 +46,7 @@ image::Unbound_Bound_Services.jpg[canvas,size=contain]
 
 [background-color="blue"]
 == Unbound Service
-|===
 
-| `startService()` | start the Service
-
-| `onStartCommand()` | after `startService()`
-
-| `stopSelf()` | Service close itself
-
-| `stopService()` | close with another component
-
-
-|===
 [background-color="blue"]
 === Foreground Service
 
@@ -89,15 +77,9 @@ https://o7planning.org/de/10421/die-anleitung-zu-android-services
 [background-color="blue"]
 == Bound Service
 
-|===
+* Several Clients are connected
+* if all clients are disconnected then the service is terminated
 
-| `bindService()`: | bind the Service to component
-
-| `onBind()` | after `bindService()`
-
-| `onUnbind()` | replace the Services
-
-|===
 
 [background-color="blue"]
 == Resources:
