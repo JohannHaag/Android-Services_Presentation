@@ -1,126 +1,65 @@
-:revealjs_theme: night
-:revealjs_slideNumber: true
+= Android Services
+:toc:
 
-== Android Services
+== Was ist ein Service?
 
-[background-color="blue"]
-=== Structure
+Android Services sind Applikationskomponente, welche permanente und wiederholende Operationen im Hintergrund ausführen. Diese benögt keine Benutzerinteraktion und somit ist ein UI nicht notwendig.
 
-1. Service
-2. The Life Cycle of Services
-3. Unbound Service
-4. Bound Service
+Ein Service wird durch eine andere Komponente (z.B. Activity) gestartet und bleibt selbst dann noch im Hintergrund aktiv, wenn der Benutzer z.B. zu einer anderen App wechselt oder die App, in der der Service gestartet wurde, zerstört ist. Außerdem muss jeder Service in die „AndroidManifest.xml„-Datei eingetragen werden.
 
-[%notitle]
-== Slide One
-image::Service.jpg[background,size=cover]
-[background-color="blue"]
-=== What is a Service ?
 
---
-An Android service is an app component , that runs in the background to permanently perform a specific operation.
---
-[background-color="blue"]
-=== What are services good for?
-image::Musics.jpg[background,size=cover]
+== Lifecycle eines Services
 
-* Network Notifications
-* Play Music
-* GPS Tracker
+Services haben einen eigenen Lebenszyklus, der völlig unabhängig vom Lebenszyklus derjenigen Komponente ist, die diesen Service gestartet hat.
 
-== The Life Cycle of Services
-image::Types.jpg[background,size=cover]
-[background-color="blue"]
+image::images/Unbound_Bound_Services.jpg[canvas,size=contain]
 
-[background-color="blue"]
-=== What is the Life Cycle of services?
-
---
-* Callback-Methoden
-* Bound Service
-* Unbound Service
-
---
-[%notitle]
-=== Slide
-image::Unbound_Bound_Services.jpg[canvas,size=contain]
-
-[background-color="blue"]
 == Unbound Service
-|===
 
-| `startService()` | start the Service
+Ein Unbound Service, auch StartedService genannt, ist ein Service, den eine andere App-Komponente (z.B. Activity) durch den Aufruf von `startService()` startet.
+Das führt wiederum zu einem Aufruf der Methode `onStartCommand()` des Services.
 
-| `onStartCommand()` | after `startService()`
+Der Unbound Service kann auf zwei unterschiedliche Weisen beendet werden:
 
-| `stopSelf()` | Service close itself
+* Entweder beendet der Service sich nach Erledigung seiner Aufgabe durch den Aufruf der Methode `stopSelf()` selbst oder
+* er wird durch eine andere Komponente mittels der Methode `stopService()` beendet.
 
-| `stopService()` | close with another component
+==== Foreground Service
 
+Ein Foreground Service ist für den Benutzer bemerkbar und muss als *Notification* dargestellt werden. Erst beim Beenden des Services kann die Notification geschlossen werden.
 
-|===
-[background-color="blue"]
-=== Foreground Service
+==== Beispiel: Simple Foreground Service
 
-* noticeable to the user
-* presentation as *Notification*
-* Termination of the service -> notification closable
-
-
-[background-color="blue"]
-=== Example: Simple Foreground Service
 
 https://androidwave.com/foreground-service-android-example-in-kotlin/
 
+==== Background Service
 
-[background-color="blue"]
-=== Background Service
+Wie der Name schon sagt, arbeitet dieser Service im Hintergrund. Dieser ist im Gegensatz zum Foreground Service nicht bemerkbar für den Benutzer.
 
-* running in the background
-* unnoticeable to the user
-
-
-[background-color="blue"]
-=== Example: Simple MusicPlayer Service
+==== Beispiel: Simple MusicPlayer Service
 
 https://o7planning.org/de/10421/die-anleitung-zu-android-services
 
-
-[background-color="blue"]
 == Bound Service
 
-|===
+Ein Bound Service ist ein Service, der es App-Komponenten (z.B. Activity, Content Provider etc.) erlaubt, diesen an sich zu binden durch den Aufruf `bindService()`. Dabei sind sowohl Komponenten der eigenen App, als auch Komponenten anderer Apps gemeint.
 
-| `bindService()`: | bind the Service to component
+Ein solcher Service muss am Ende über die Methode `onUnbind()` explizit wieder gelöst werden. Dabei besteht die Möglichkeit, dass sich mehrere Komponenten im selben Prozess gleichzeitig mit einem Bound Service verbinden können.
 
-| `onBind()` | after `bindService()`
 
-| `onUnbind()` | replace the Services
+== Quellen
 
-|===
-
-[background-color="blue"]
-== Resources:
---
-[preview=true]
 https://www.big-app.de/alles-zu-services-unter-android/
 
 https://www.tutorialspoint.com/android/android_services.htm
 
---
-[preview=true]
-
-
 https://www.geeksforgeeks.org/services-in-android-with-example/
 
 https://www.edureka.co/blog/android-service-tutorial/
-
 
 https://vogella.com/tutorials/AndroidServices/article.html
 
 https://developer.android.com/guide/components/services
 
 https://medium.com/@anant.rao07/android-bound-services-f1cceb2f1f3e
-
-
-
